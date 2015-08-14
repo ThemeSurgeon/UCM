@@ -1,0 +1,20 @@
+
+/**
+ * Gravity Forms (ID #) to UCM
+ */
+
+add_action('gform_after_submission_#', 'post_to_ucm', 10, 2);
+function post_to_ucm($entry, $form) {
+$post_url = 'http://example.co.uk/external/m.customer/h.public_signup';
+$body = array(
+
+'customer[customer_name]' => $entry['1'],
+'contact[name]' => $entry['2'],
+'contact[email][0]' => $entry['3'],
+'contact[phone][0]' => $entry['4'],
+'address[line_1]' => $entry['5'],
+
+);
+$request = new WP_Http();
+$response = $request->post($post_url, array('body' => $body));
+}
